@@ -16,8 +16,8 @@ Installation for Proxmox is stright forward, download and install it on a separa
 1. Go to the Proxmox Download center: https://www.proxmox.com/en/downloads
 2. Download the Latest Proxmox VE latest ISO.
 3. You can convert the Iso as a bootable USB drive, personally I use Ventoy
-  - Ventoy is a standalone bootable drive that can launch a selected ISO from USB.
-  - Ventoy can be found here: https://www.ventoy.net/en/download.html
+   - Ventoy is a standalone bootable drive that can launch a selected ISO from USB.
+   - Ventoy can be found here: https://www.ventoy.net/en/download.html
 4. Once you Have Ventoy on USB copy the Proxmox Iso.
 5. Boot with the USB and Select and Install the Proxmox VE.
 
