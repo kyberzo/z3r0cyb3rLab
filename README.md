@@ -154,6 +154,8 @@ For this lab environment, we will use `containerd` as our container runtime:
     [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
     SystemdCgroup = true
     ```
+6. Write (CTRL+O) and Exit (CTRL+X)
+
 ### Verify Swap is Disabled
 - Kubernetes requires swap to be disabled for optimal performance and scheduling:
 1. Check current swap status:
