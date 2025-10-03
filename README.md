@@ -16,8 +16,8 @@ Installation for Proxmox is stright forward, download and install it on a separa
 1. Go to the Proxmox Download center: https://www.proxmox.com/en/downloads
 2. Download the Latest Proxmox VE latest ISO.
 3. You can convert the Iso as a bootable USB drive, personally I use Ventoy
-  - Ventoy is a standalone bootable drive that can launch a selected ISO from USB.
-  - Ventoy can be found here: https://www.ventoy.net/en/download.html
+   - Ventoy is a standalone bootable drive that can launch a selected ISO from USB.
+   - Ventoy can be found here: https://www.ventoy.net/en/download.html
 4. Once you Have Ventoy on USB copy the Proxmox Iso.
 5. Boot with the USB and Select and Install the Proxmox VE.
 
@@ -136,8 +136,8 @@ A preconfigured built upon the Vanila Ubuntu Server for that will serve as templ
 For this lab environment, we will use `containerd` as our container runtime:
 1. Install required packages:
     ```bash
-    sudo apt-get update
-    sudo apt-get install containerd
+    sudo apt update
+    sudo apt install containerd
     ```
 2. Create default containerd configuration:
     ```bash
@@ -154,6 +154,8 @@ For this lab environment, we will use `containerd` as our container runtime:
     [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
     SystemdCgroup = true
     ```
+6. Write (CTRL+O) and Exit (CTRL+X)
+
 ### Verify Swap is Disabled
 - Kubernetes requires swap to be disabled for optimal performance and scheduling:
 1. Check current swap status:
