@@ -1,6 +1,11 @@
 # Introduction
 This repository contains various cybersecurity lab setups and practical exercises designed to enhance security skills and knowledge. The lab environment provides hands-on experience with security tools and techniques.
 
+# TLDR;
+- Prepare Proxmox Environment
+- Create A Template Using ubuntu 24.04 Cloud-Init Image
+- Using the CloudInit Ubuntu Server 24.04 Base Image create a Kubernetes Ready Template.
+
 # Prerequisites and Environments
 Most lab environments will be built using Proxmox virtualization. Some standalone labs can be performed in any virtualization platform, though VMware will be used primarily for standalone cases. For the time being requirements include:
 -  Proxmox - any old machine will do to serve as your proxmox server, the higher RAM the better at minimum 16GB of RAM.
@@ -16,7 +21,7 @@ Installation for Proxmox is stright forward, download and install it on a separa
 5. Boot with the USB and Select and Install the Proxmox VE.
 
 ## Proxmox Post-Installation
-> This mainly optional, specially to remov ethe Screen Nag about the enterprise subscription. [Post Install Script](https://community-scripts.github.io/ProxmoxVE/scripts?id=post-pve-install)
+> This mainly optional, specially to remove the Screen Nag about the enterprise subscription. [Post Install Script](https://community-scripts.github.io/ProxmoxVE/scripts?id=post-pve-install)
 
 ## Base Template Preparation: Vanila Ubuntu Server
 A preconfigured cloud init ubuntu image to serve as a base for building or installing other components.
