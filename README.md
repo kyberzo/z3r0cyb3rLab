@@ -136,8 +136,8 @@ A preconfigured built upon the Vanila Ubuntu Server for that will serve as templ
 For this lab environment, we will use `containerd` as our container runtime:
 1. Install required packages:
     ```bash
-    sudo apt-get update
-    sudo apt-get install containerd
+    sudo apt update
+    sudo apt install containerd
     ```
 2. Create default containerd configuration:
     ```bash
