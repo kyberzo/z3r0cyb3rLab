@@ -3,6 +3,7 @@ This repository contains various cybersecurity lab setups and practical exercise
 
 # TLDR;
 - Prepare Proxmox Environment
+- SSH key setup
 - Create A Template Using ubuntu 24.04 Cloud-Init Image
 - Using the CloudInit Ubuntu Server 24.04 Base Image create a Kubernetes Ready Template.
 
@@ -20,8 +21,19 @@ Installation for Proxmox is stright forward, download and install it on a separa
 4. Once you Have Ventoy on USB copy the Proxmox Iso.
 5. Boot with the USB and Select and Install the Proxmox VE.
 
-## Proxmox Post-Installation
+### Proxmox Post-Installation
 > This mainly optional, specially to remove the Screen Nag about the enterprise subscription. [Post Install Script](https://community-scripts.github.io/ProxmoxVE/scripts?id=post-pve-install)
+
+## SSH Key Setup
+- This ssh key will be used for the virtual Machine templates as well as the ssh key for terraform and ansible automation, if you prefer to have a separate key you may do so.
+   ```bash
+   ssh-keygen -t rsa -C "automation" -f ./mylabskey
+   ```
+- Leave the passphrase blank on this key.
+- For future use with ansible set the permissions
+   ```bash
+   chmod 400 mylabskey
+   ```
 
 ## Base Template Preparation: Vanila Ubuntu Server
 A preconfigured cloud init ubuntu image to serve as a base for building or installing other components.
