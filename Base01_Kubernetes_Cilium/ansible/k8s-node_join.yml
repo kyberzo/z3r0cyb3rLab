@@ -1,0 +1,14 @@
+---
+    - name: Join All nodes
+      hosts: k8s_nodes
+      become: true
+      
+      tasks:
+        - name: Join The nodes
+          # Change the IP address, token, and hash as per your setup
+          command: <add your join command here>
+          register: output
+
+        - name: Display cluster status
+          debug:
+            var: output.stdout_lines

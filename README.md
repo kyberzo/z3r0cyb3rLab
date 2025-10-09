@@ -203,3 +203,10 @@ Bridging must be enabled for proper communication between master and worker node
 1. Shutdown the Virtual Machine.
 2. Right click on the Virtual Machine (if using the same as "ubuntu-server-2404-kubernetes-template")
 3. Select **"Convert to Template"**
+
+## Create A VM Workstation as Staging for Terraform and Ansible
+- You may opt to use a full GUI Operating system or a simnple ubuntu server headless using the Vanila Ubuntu Template.
+- For full GUI based Operating system, you may install it accordingly using an ISO installer.
+  - recommended a Linux Distro and Install Visual Studio Code
+Your Proxmox Environment Should Look like Similar to this.
+![Proxmox](/assets/proxmox_environment.png)

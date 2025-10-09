@@ -1,0 +1,157 @@
+---
+- name: Initialize Kubernetes Master Node
+  hosts: k8s_master
+  become: true
+  tasks:
+    - name: Update apt cache and upgrade packages
+      apt:
+        update_cache: yes
+        upgrade: yes
+
+    - name: Install Additional packages
+      apt:
+        name: 
+          - screen
+        state: present
+    #------------------------------------------------------------------
+    - name: Check if Helm GPG key exists
+      stat:
+        path: /usr/share/keyrings/helm.gpg 
+      register: helm_key
+
+    - name: Download Helm GPG key
+      get_url:
+        url: https://packages.buildkite.com/helm-linux/helm-debian/gpgkey
+        dest: /tmp/helm.key
+        mode: '0644'
+      when: not helm_key.stat.exists
+
+    - name: Import Helm GPG key
+      command: gpg --dearmor -o  /usr/share/keyrings/helm.gpg  /tmp/helm.key
+      when: not helm_key.stat.exists
+
+    - name: Add Helm repository
+      copy:
+        content: "deb [signed-by=/usr/share/keyrings/helm.gpg] https://packages.buildkite.com/helm-linux/helm-debian/any/ any main\n"
+        dest: /etc/apt/sources.list.d/helm-stable-debian.list
+        mode: '0644'
+
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+    
+    - name: Install Helm packages
+      apt:
+        name:
+          - helm
+        state: present
+
+    - name: Prepare Helm Cilium Repo 
+      command: helm repo add cilium https://helm.cilium.io/
+      register: repo_status
+      become: true
+      become_user: "{{ ansible_user }}"
+      changed_when: false
+
+    - name: Display Repo status
+      debug:
+        var: repo_status.stdout_lines
+    #------------------------------------------------------------------
+    - name: Get cilium CLI Version
+      command: curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt
+      register: cli_version
+      become: false
+      changed_when: false
+
+    - name: Display cli_version
+      debug:
+        var: cli_version.stdout
+
+    - name: Download Cilium Binary Package (sha256) Info
+      get_url:
+        url: "https://github.com/cilium/cilium-cli/releases/download/{{ cli_version.stdout }}/cilium-linux-{{ cilium_cli_arch }}.tar.gz.sha256sum"
+        dest: "/tmp/cilium-linux-{{ cilium_cli_arch }}.tar.gz.sha256sum"
+        mode: '0644'
+
+    - name: Search for a Sha256
+      shell: grep -o -E [a-fA-F0-9]{64} /tmp/cilium-linux-{{ cilium_cli_arch }}.tar.gz.sha256sum
+      register: grep_result
+      failed_when: grep_result.rc not in [0, 1]
+
+    - name: Debug result
+      debug:
+        msg: "SHA256: {{ grep_result.stdout }}"
+
+    - name: Download Cilium Binary Package with checksum url (sha256)
+      get_url:
+        url: "https://github.com/cilium/cilium-cli/releases/download/{{ cli_version.stdout }}/cilium-linux-{{ cilium_cli_arch }}.tar.gz"
+        dest: "/tmp/cilium-linux-{{ cilium_cli_arch }}.tar.gz"
+        checksum: sha256:{{ grep_result.stdout }}
+        mode: '0644'
+
+    - name: Install Cilium CLI Binary 
+      command: "tar xzvfC /tmp/cilium-linux-{{ cilium_cli_arch }}.tar.gz /usr/local/bin"
+      become: false
+      changed_when: false
+
+    #------------------------------------------------------------------
+
+    - name: Initialize Kubernetes cluster
+      command: kubeadm init --pod-network-cidr={{ pod_network_cidr }}
+      register: kubeadm_init
+      # Skip if the cluster is already initialized
+      args:
+        creates: /etc/kubernetes/admin.conf
+
+    - name: Create .kube directory in user's home
+      file:
+        path: "/home/{{ ansible_user }}/.kube"
+        state: directory
+        mode: '0755'
+      become: false
+
+    - name: Copy kube admin config to user's home directory
+      copy:
+        src: /etc/kubernetes/admin.conf
+        dest: "/home/{{ ansible_user }}/.kube/config"
+        remote_src: yes
+        mode: '0600'
+      become: false
+
+    - name: Set ownership of kube config file
+      file:
+        path: "/home/{{ ansible_user }}/.kube/config"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+      become: false
+
+    - name: Get cluster status
+      command: kubectl get nodes
+      register: cluster_status 
+      become: true
+      become_user: "{{ ansible_user }}"
+
+    - name: Display cluster status
+      debug:
+        var: cluster_status.stdout_lines
+  #---------------------------------------------------------------
+  # We can now install Cilium either by Helm or cilium cli
+    - name: Install cilium using cilium CLI
+      command: cilium install --version {{ cilium_version }}
+      register: cilium_state
+      become: true
+      become_user: "{{ ansible_user }}"
+
+    - name: Display cluster status
+      debug:
+        var: cilium_state.stdout_lines
+
+    - name: Get Join Command fo Node to Join
+      command: kubeadm token create --print-join-command
+      register: join_cmd
+      become: true
+      become_user: "{{ ansible_user }}"
+
+    - name: Display cluster status
+      debug:
+        var: join_cmd.stdout_lines

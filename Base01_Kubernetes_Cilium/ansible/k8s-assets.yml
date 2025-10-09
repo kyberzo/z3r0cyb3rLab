@@ -1,0 +1,47 @@
+---
+all:
+  children:
+    k8s_master:
+      hosts:
+        k8s-master:
+          ansible_host: 192.168.200.130
+    
+    k8s_nodes:
+      hosts:
+        k8s-node1:
+          ansible_host: 192.168.200.131
+        k8s-node2:
+          ansible_host: 192.168.200.132
+        k8s-node3:
+          ansible_host: 192.168.200.133
+    
+    k8s_cluster:
+      children:
+        k8s_master: {}
+        k8s_nodes: {}
+      vars:
+        # see https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
+        # make sure this network does not overlap with your home/office network
+        # change this to your desired network
+        cluster_network: 192.168.200.0/24
+        # see https://kubernetes.io/docs/concepts/cluster-administration/networking/
+        # keeping it default
+        pod_network_cidr: 10.244.0.0/16
+        # see https://kubernetes.io/releases/
+        # change this to your desired kubernetes version use v{Major}.{Minor} format
+        kubernetes_version: v1.34
+        # This is for cilium installation
+        # https://docs.cilium.io/en/stable/gettingstarted/k8s-install-default/#install-cilium
+        cilium_version: 1.18.2
+        # This is for cilium CLI installation
+        # https://docs.cilium.io/en/stable/gettingstarted/k8s-install-default/#install-the-cilium-cli
+        # Dfine the Architecture of your nodes, amd64 for Intel/AMD and arm64 for ARM
+        cilium_cli_arch: amd64
+  
+  vars:
+    ansible_user: "<user_name>"
+    ansible_password: "<password>"
+    ansible_become: true
+    # sudo password for the user
+    ansible_become_password : "<password>"
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
