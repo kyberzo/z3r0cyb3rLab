@@ -125,7 +125,7 @@ This provider enables Terraform to interact with your Proxmox infrastructure pro
    ```bash
    cilium status
    ```
-   Output when all is OK.
+   - Output when all is OK.
    ```bash
    kyberzo@k8s-master:~$ cilium status
        /¯¯\
