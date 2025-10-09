@@ -121,7 +121,7 @@ This provider enables Terraform to interact with your Proxmox infrastructure pro
    k8s-node2    Ready    <none>          3m41s   v1.34.1
    k8s-node3    Ready    <none>          3m40s   v1.34.1
    ```
-10. Verify Cilium Status
+10. Verify Cilium Status.
    ```bash
    cilium status
    ```
