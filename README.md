@@ -115,6 +115,8 @@ A preconfigured cloud init ubuntu image to serve as a base for building or insta
 1. Select the Freshly Configured Virtual Image
 2. Right Click and Select **"Convert To Template"**
 
+> [!IMPORTANT]  
+> You now have a Base Ubuntu Sever Template. It is Best **NOT** to Run This VM at this point as it will create Unique Idebntification. Just Convert It To Template.
 
 ## Base Template Preparation: Kubernetes Ready Ubuntu
 A preconfigured built upon the Vanila Ubuntu Server for that will serve as template for building the kubernetes cluster. Some configuration will require manual setting, while possible in automation for now, preferrably we will premade some of the components and settings, ready for kuberenets cluster deployment.
