@@ -104,6 +104,9 @@ This provider enables Terraform to interact with your Proxmox infrastructure pro
    ansible-playbook k8s-master.yml -i k8s-assets.yml --key-file ../../mylabskey
    ```
 7. Modify the **k8s-node_join.yml** join command
+> 💡 **Tip**
+> 
+> Previous Ansible Playbook Outputs the Join Command
 8. Run the join ansible
    ```bash
    ansible-playbook k8s-node_join.yml -i k8s-assets.yml --key-file ../../mylabskey
@@ -149,8 +152,3 @@ This provider enables Terraform to interact with your Proxmox infrastructure pro
                           cilium-envoy       quay.io/cilium/cilium-envoy:v1.34.7-1757592137-1a52bb680a956879722f48c591a2ca90f7791324@sha256:7932d656b63f6f866b6732099d33355184322123cfe1182e6f05175a3bc2e0e0: 4
                           cilium-operator    quay.io/cilium/operator-generic:v1.18.2@sha256:cb4e4ffc5789fd5ff6a534e3b1460623df61cba00f5ea1c7b40153b5efb81805: 1
    ```
-
-
-
-
-
