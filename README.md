@@ -2,6 +2,9 @@
 # Introduction
 This repository contains various cybersecurity lab setups and practical exercises designed to enhance security skills and knowledge. The lab environment provides hands-on experience with security tools and techniques.
 
+> [!WARNING]  
+> This is a Labs Set-up for Learnning purpose and not designed for production deployment, there are other recommended options for Kubernetes Production Deployment like using Talos.
+
 # TLDR;
 - Prepare Proxmox Environment
 - SSH key setup
