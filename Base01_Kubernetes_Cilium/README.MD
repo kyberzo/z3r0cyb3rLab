@@ -62,7 +62,7 @@ This provider enables Terraform to interact with your Proxmox infrastructure pro
 # Modify Terraform Configuration Accordingly
 1. Configure or set up the **vars.tf** under the "terraform" folder according to your setup.
 2. Modify some of the key configurations in **main.tf**
-  - clone = <the template to use>
+  - clone = {the name template to use}
   - vmid
     - master, line number  84: vmid = 130
     - worker, line number 175: vmid = "${count.index + 131 }"
