@@ -104,8 +104,8 @@ This provider enables Terraform to interact with your Proxmox infrastructure pro
    ansible-playbook k8s-master.yml -i k8s-assets.yml --key-file ../../mylabskey
    ```
 7. Modify the **k8s-node_join.yml** join command
-   > [!Tip]
-   > Previous Ansible Playbook Outputs the Join Command
+  > [!Tip]
+  > Previous Ansible Playbook Outputs the Join Command
 8. Run the join ansible
    ```bash
    ansible-playbook k8s-node_join.yml -i k8s-assets.yml --key-file ../../mylabskey
