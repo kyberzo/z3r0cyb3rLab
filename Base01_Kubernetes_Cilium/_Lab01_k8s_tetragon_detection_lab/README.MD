@@ -15,7 +15,7 @@ Tetragon operates at the kernel level without requiring application changes, pro
 # Requirements
 - [Proxmox Environment](/README.md)
 - [Base Kubernetes Cluster](/Base01_Kubernetes_Cilium/README.MD)
-- Splunk
+- [Splunk](https://www.splunk.com/)
   - We will not cover Splunk installation here. This guide assumes that you have an existing Splunk deployment of your choice.
   - In this lab, Splunk is the free version deployed in a Virtual Machine.
 > [!Tip]
@@ -30,11 +30,13 @@ Tetragon operates at the kernel level without requiring application changes, pro
   ```
   > [!NOTE]
   > The Cilium Helm repository is already installed if you followed the Base01_Kubernetes_Cilium deployment guide.
+
 2. Verify the Tetragon deployment status:
   ```bash
   kubectl rollout status -n kube-system ds/tetragon -w
   ```
   This command will wait and display the rollout status until all Tetragon pods are ready.
+
 3. Verify the pods are running:
   ```bash
   kubectl get pods -n kube-system -l app.kubernetes.io/name=tetragon
@@ -47,30 +49,24 @@ Tetragon operates at the kernel level without requiring application changes, pro
   tetragon-kxptv   2/2     Running   0          37m
   tetragon-n87ht   2/2     Running   0          37m
   ```
-
 # Configuring Splunk Integration
-
 ## Setting up Splunk HTTP Event Collector (HEC)
 
 1. Log into your Splunk instance and navigate to **Settings > Data Inputs > HTTP Event Collector**.
-
 2. Click **New Token** and configure:
-   - **Name**: `tetragon-events`
-   - **Source type**: `_json` (Select)
-   - **Index**: Create or select an index (e.g., `kubernetes_security`)
-   - Click **Review** and then **Submit**
-
+  - **Name**: `tetragon-events`
+  - **Source type**: `_json` (Select)
+  - **Index**: Create or select an index
+    - kubernetes_security
+  - Click **Review** and then **Submit**
 3. Copy the **Token Value** (you'll need this for the next step).
-
 4. Ensure HEC is enabled:
    - Go to **Settings > Data Inputs > HTTP Event Collector > Global Settings**
    - Check **All Tokens** is set to **Enabled**
    - Note the **HTTP Port Number** (default: 8088)
 
 ## Deploying Fluent Bit to Forward Tetragon Events
-
 We'll use Fluent Bit as a lightweight log forwarder to send Tetragon JSON events to Splunk.
-
 1. Create a namespace for logging:
   ```bash
   kubectl create namespace logging
@@ -82,7 +78,6 @@ We'll use Fluent Bit as a lightweight log forwarder to send Tetragon JSON events
     -n logging
   ```
   Replace `YOUR_SPLUNK_HEC_TOKEN` with the token from Splunk.
-
 3. Create a ConfigMap for Fluent Bit configuration:
   ```bash
   cat <<'EOF' | kubectl apply -f -
@@ -129,7 +124,6 @@ We'll use Fluent Bit as a lightweight log forwarder to send Tetragon JSON events
   EOF
   ```
   Replace `YOUR_SPLUNK_IP` with your Splunk server IP address.
-
 4. Deploy Fluent Bit DaemonSet:
   ```bash
   cat <<'EOF' | kubectl apply -f -
@@ -222,7 +216,6 @@ We'll use Fluent Bit as a lightweight log forwarder to send Tetragon JSON events
   [2025/10/10 07:51:19.812672324] [ info] [input:tail:tail.0] inotify_fs_add(): inode=2228 watch_fd=1 name=/var/run/cilium/tetragon/tetragon.log
   [2025/10/10 07:51:19.815375890] [ info] [output:splunk:splunk.0] worker #1 started
 ```
-
 ## Verifying Events in Splunk
 1. Log into Splunk and go to **Search & Reporting**.
 2. Run a search query to verify Tetragon events are being received:
