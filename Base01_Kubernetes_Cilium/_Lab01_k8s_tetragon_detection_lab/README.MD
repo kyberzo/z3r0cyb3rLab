@@ -18,6 +18,7 @@ Tetragon operates at the kernel level without requiring application changes, pro
 - Splunk
   - We will not cover Splunk installation here. This guide assumes that you have an existing Splunk deployment of your choice.
   - In this lab, Splunk is the free version deployed in a Virtual Machine.
+
   > [!Tip]
   > The control plane node has "screen" installed.
 
