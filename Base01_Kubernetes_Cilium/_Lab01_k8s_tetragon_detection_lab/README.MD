@@ -125,6 +125,7 @@ We'll use Fluent Bit as a lightweight log forwarder to send Tetragon JSON events
   EOF
   ```
   Replace `YOUR_SPLUNK_IP` with your Splunk server IP address.
+
 4. Deploy Fluent Bit DaemonSet:
   ```bash
   cat <<'EOF' | kubectl apply -f -
@@ -175,6 +176,7 @@ We'll use Fluent Bit as a lightweight log forwarder to send Tetragon JSON events
     namespace: logging
   EOF
   ```
+
 5. Verify Fluent Bit is running:
   ```bash
   kubectl get pods -n logging -l app=fluent-bit
