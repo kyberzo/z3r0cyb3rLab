@@ -78,7 +78,8 @@ We'll use Fluent Bit as a lightweight log forwarder to send Tetragon JSON events
     -n logging
   ```
   Replace `YOUR_SPLUNK_HEC_TOKEN` with the token from Splunk.
-3. Create a ConfigMap for Fluent Bit configuration:
+
+3. Create a ConfigMap for Fluent Bit configuration.
   ```bash
   cat <<'EOF' | kubectl apply -f -
   apiVersion: v1
