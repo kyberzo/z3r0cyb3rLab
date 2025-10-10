@@ -2,7 +2,7 @@
 A simple environment designed for creating a Tetragon detection lab using an existing Kubernetes Cluster in Proxmox Environment. This will leverage Splunk to collect the security events of Tetragon.
 
 # What is Tetragon?
-Tetragon is a flexible Kubernetes-aware security observability and runtime enforcement tool that uses eBPF (extended Berkeley Packet Filter) to provide deep visibility into system behavior. It enables real-time monitoring and detection of:
+[Tetragon](https://tetragon.io/) is a flexible Kubernetes-aware security observability and runtime enforcement tool that uses eBPF (extended Berkeley Packet Filter) to provide deep visibility into system behavior. It enables real-time monitoring and detection of:
 
 - **Process Execution**: Track process creation, arguments, and execution chains
 - **File Access**: Monitor file opens, reads, writes, and modifications
@@ -227,5 +227,6 @@ We'll use Fluent Bit as a lightweight log forwarder to send Tetragon JSON events
 1. Log into Splunk and go to **Search & Reporting**.
 2. Run a search query to verify Tetragon events are being received:
   ```spl
-  index=kubernetes_security
+  index=kubernetes_security sourcetype=_json
   ```
+  ![splunk_verify](/Base01_Kubernetes_Cilium/_Lab01_k8s_tetragon_detection_lab/assets/splunk_verify_flow.png)
