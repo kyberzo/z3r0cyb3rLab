@@ -22,6 +22,9 @@ Tetragon operates at the kernel level without requiring application changes, pro
 > The control plane node has "screen" installed.
 
 # Installing Tetragon to the Kubernetes Cluster
+> [!IMPORTANT]  
+> Intructions here are mostly done in the **Kuberenetes Control Plane**. Its best to SSH to to the Control Plane Terminal.
+
 1. Install Tetragon using Helm:
   ```bash
   helm repo add cilium https://helm.cilium.io
@@ -51,8 +54,7 @@ Tetragon operates at the kernel level without requiring application changes, pro
   ```
 # Configuring Splunk Integration
 ## Setting up Splunk HTTP Event Collector (HEC)
-
-1. Log into your Splunk instance and navigate to **Settings > Data Inputs > HTTP Event Collector**.
+1. Log into your **Splunk Web Interface** and navigate to **Settings > Data Inputs > HTTP Event Collector**.
 2. Click **New Token** and configure:
   - **Name**: `tetragon-events`
   - **Source type**: `_json` (Select)
@@ -61,9 +63,9 @@ Tetragon operates at the kernel level without requiring application changes, pro
   - Click **Review** and then **Submit**
 3. Copy the **Token Value** (you'll need this for the next step).
 4. Ensure HEC is enabled:
-   - Go to **Settings > Data Inputs > HTTP Event Collector > Global Settings**
-   - Check **All Tokens** is set to **Enabled**
-   - Note the **HTTP Port Number** (default: 8088)
+  - Go to **Settings > Data Inputs > HTTP Event Collector > Global Settings**
+  - Check **All Tokens** is set to **Enabled**
+  - Note the **HTTP Port Number** (default: 8088)
 
 ## Deploying Fluent Bit to Forward Tetragon Events
 We'll use Fluent Bit as a lightweight log forwarder to send Tetragon JSON events to Splunk.
@@ -220,6 +222,9 @@ We'll use Fluent Bit as a lightweight log forwarder to send Tetragon JSON events
   [2025/10/10 07:51:19.815375890] [ info] [output:splunk:splunk.0] worker #1 started
 ```
 ## Verifying Events in Splunk
+> [!IMPORTANT]  
+> Tetragon comes with default Process Execution Monitoring Policy, Your Splunk should ingest the fluentbit operations made as a daemonset.
+
 1. Log into Splunk and go to **Search & Reporting**.
 2. Run a search query to verify Tetragon events are being received:
   ```spl
