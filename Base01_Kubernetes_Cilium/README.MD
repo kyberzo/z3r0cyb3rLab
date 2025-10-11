@@ -99,6 +99,9 @@ This provider enables Terraform to interact with your Proxmox infrastructure pro
    ```bash
    ansible-playbook k8s-setup.yml -i k8s-assets.yml  --key-file ../../mylabskey
    ```
+> [!IMPORTANT]  
+> If You move your key or copy pasted your key to the placeholder file and have a permssion error on the key, make sure to modify its attribute ie:
+> chmod 400 mylabskey
 6. SetUp Master
    ```bash
    ansible-playbook k8s-master.yml -i k8s-assets.yml --key-file ../../mylabskey
