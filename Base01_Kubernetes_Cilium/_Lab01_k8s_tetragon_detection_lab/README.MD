@@ -23,7 +23,7 @@ Tetragon operates at the kernel level without requiring application changes, pro
 
 # Installing Tetragon to the Kubernetes Cluster
 > [!IMPORTANT]  
-> Intructions here are mostly done in the **Kuberenetes Control Plane**. Its best to SSH to to the Control Plane Terminal.
+> Instructions here are mostly done in the **Kubernetes Control Plane**. It's best to SSH to the Control Plane Terminal.
 
 1. Install Tetragon using Helm:
   ```bash
@@ -190,7 +190,7 @@ We'll use Fluent Bit as a lightweight log forwarder to send Tetragon JSON events
   fluent-bit-hbs8w   1/1     Running   0          20m
   fluent-bit-q7c5t   1/1     Running   0          20m
   ```
-  Its also best to see the logs if issues are encountered.
+  It's also best to see the logs if issues are encountered.
   ```bash
   kubectl logs -n logging fluent-bit-q7c5t
   ```
